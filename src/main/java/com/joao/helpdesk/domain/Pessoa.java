@@ -1,21 +1,49 @@
 package com.joao.helpdesk.domain;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.joao.helpdesk.domain.enums.Perfil;
 
-public abstract class Pessoa {
 
+@Entity
+public abstract class Pessoa implements Serializable {
+
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY) //banco gera um id tiferente
 	protected Integer id;
 	protected String nome;
+	
+	@Column(unique = true)
 	protected String cpf;
-	protected String email;
-	protected String senha;
+	
+	@Column(unique = true)	
+	protected String email;	
+	protected String senha;	
+	
+	@ElementCollection(fetch = FetchType.EAGER)// a LISTINHA DE PERFIL VAI VIM JUNTO COM O USUARIO DO bd
+	@CollectionTable(name = "PERFIS")
 	protected Set<Integer> perfis = new HashSet<>(); //nao permite dois valores iguais 
+	
+	
+	@JsonFormat(pattern = "dd/MM/yyyy") //Formatar a data
 	protected LocalDate dataCriacao = LocalDate.now();
 	public Pessoa() {
 		super();
