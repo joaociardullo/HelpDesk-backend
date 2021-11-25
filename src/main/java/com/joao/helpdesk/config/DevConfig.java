@@ -15,7 +15,7 @@ public class DevConfig {
 	@Autowired
 	private DBService dbService;
 
-	@Value("${spring.jpa.hibernate.ddl-auto}")
+	@Value("${spring.jpa.hibernate.ddl-auto}") //Arquivo de configuração do properties
 	private String value;
 
 	@Bean
