@@ -31,9 +31,10 @@ public class TecnicoDTO implements Serializable {
 	// CONSTRUTOR DA SUPER CLASSE
 	public TecnicoDTO() {
 		super();
-
+		addPerfil(Perfil.CLIENTE);
 	}
 
+	//Construtor
 	public TecnicoDTO(Tecnico obj) {
 		super();
 		this.id = obj.getId();

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.joao.helpdesk.domain.Tecnico;
+import com.joao.helpdesk.domain.dtos.TecnicoDTO;
 import com.joao.helpdesk.repositores.TecnicoRepository;
 import com.joao.helpdesk.services.exceptions.ObjectNotFoundException;
 
@@ -15,14 +16,23 @@ public class TecnicoService {
 
 	@Autowired
 	private TecnicoRepository repository;
-	
+
 	public Tecnico findById(Integer id) {
-		 Optional<Tecnico> obj = repository.findById(id);
-		 return obj.orElseThrow(()-> new ObjectNotFoundException("Objeto nao encotrado:" + id));  // Se não encontrar retorna null por enquanto
+		Optional<Tecnico> obj = repository.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto nao encotrado:" + id)); // Se não encontrar
+																									// retorna null por
+																									// enquanto
 	}
 
 	public List<Tecnico> findAll() {
-
 		return repository.findAll();
+	}
+
+	public Tecnico create(TecnicoDTO objDTO) {
+
+		objDTO.setId(null); //esse ID vai vim nullo
+		Tecnico newObj = new Tecnico(objDTO);
+		return repository.save(newObj);
+
 	}
 }
