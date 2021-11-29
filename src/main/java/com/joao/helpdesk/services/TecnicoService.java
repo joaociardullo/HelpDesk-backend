@@ -1,5 +1,6 @@
 package com.joao.helpdesk.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,5 +19,10 @@ public class TecnicoService {
 	public Tecnico findById(Integer id) {
 		 Optional<Tecnico> obj = repository.findById(id);
 		 return obj.orElseThrow(()-> new ObjectNotFoundException("Objeto nao encotrado:" + id));  // Se não encontrar retorna null por enquanto
+	}
+
+	public List<Tecnico> findAll() {
+
+		return repository.findAll();
 	}
 }

@@ -4,19 +4,16 @@ import java.io.Serializable;
 
 public class StandardError implements Serializable {
 
-	
 	private static final long serialVersionUID = 1L;
-	
 
 	private long timestamp;
 	private Integer status;
 	private String error;
 	private String message;
 	private String path;
-	
+
 	public StandardError() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public StandardError(long timestamp, Integer status, String error, String message, String path) {
@@ -67,10 +64,5 @@ public class StandardError implements Serializable {
 	public void setPath(String path) {
 		this.path = path;
 	}
-	
-	
-	
-	
-	
-	
+
 }
