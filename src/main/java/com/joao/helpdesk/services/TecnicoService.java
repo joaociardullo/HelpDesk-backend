@@ -3,6 +3,8 @@ package com.joao.helpdesk.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,24 @@ public class TecnicoService {
 		return repository.save(newObj);
 
 	}
+	
+	public Tecnico update(Integer id, @Valid TecnicoDTO objDTO) {
+		objDTO.setId(id);
+		Tecnico oldObj = findById(id);
+		ValidaPorCPFEEmail(objDTO);
+		oldObj =new Tecnico(objDTO);
+		return repository.save(oldObj);
+	}
+	
+	//Deletando pelo ID 
+	public void delete(Integer id) {
+		Tecnico obj =findById(id);
+		if(obj.getChamados().size()>0) {
+			throw new DataIntegrityViolationException("O tecnico possui ordem de serviço e nao pode ser deletado !!"); //Tratando a violação
+		}
+			repository.deleteById(id);
+		
+	}
 
 	/*
 	 *METODO PARA vALIDAR O CPF E EMAIL ATRAVEIS DE OBJ E MANIPULANDO COM POSTMAN  
@@ -60,4 +80,6 @@ public class TecnicoService {
 			
 		}
 	}
+
+	
 }
