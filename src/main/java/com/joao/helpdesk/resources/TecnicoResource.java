@@ -26,8 +26,6 @@ import com.joao.helpdesk.services.TecnicoService;
 @RequestMapping(value = "/tecnicos")
 public class TecnicoResource {
 
-	// localhost:8080/tecnicos
-
 	@Autowired
 	private TecnicoService service;
 
@@ -35,43 +33,36 @@ public class TecnicoResource {
 	public ResponseEntity<TecnicoDTO> findById(@PathVariable Integer id) {
 		Tecnico obj = service.findById(id);
 		return ResponseEntity.ok().body(new TecnicoDTO(obj));
-
 	}
 
-	// EndPoint Listar
 	@GetMapping
-	public ResponseEntity<List<TecnicoDTO>> findAll(){
+	public ResponseEntity<List<TecnicoDTO>> findAll() {
 		List<Tecnico> list = service.findAll();
 		List<TecnicoDTO> listDTO = list.stream().map(obj -> new TecnicoDTO(obj)).collect(Collectors.toList());
 		return ResponseEntity.ok().body(listDTO);
-				
 	}
+
 	
-	
-	//End Point CRIAR
 	@PostMapping
-	public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO objDTO){
-		
+	public ResponseEntity<TecnicoDTO> create(@Valid @RequestBody TecnicoDTO objDTO) {
 		Tecnico newObj = service.create(objDTO);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(newObj.getId()).toUri();
-		return ResponseEntity.created(null).build();
+		return ResponseEntity.created(uri).build();
 	}
 	
-	//END POINT Atualizar
-	@PutMapping(value= "/{id}")
-	public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id,@Valid @RequestBody TecnicoDTO objDTO){
+	
+	@PutMapping(value = "/{id}")
+	public ResponseEntity<TecnicoDTO> update(@PathVariable Integer id, @Valid @RequestBody TecnicoDTO objDTO) {
 		Tecnico obj = service.update(id, objDTO);
-		return ResponseEntity.ok().body(new TecnicoDTO(obj));		
+		return ResponseEntity.ok().body(new TecnicoDTO(obj));
 	}
 	
 	
-
-	/*
-	 * End Point Deletar
-	 * */
 	@DeleteMapping(value = "/{id}")
-	public ResponseEntity<TecnicoDTO> delete(@PathVariable Integer Id){
-		service.delete(Id);
-		return ResponseEntity.noContent().build();		
+	public ResponseEntity<TecnicoDTO> delete(@PathVariable Integer id) {
+		service.delete(id); 
+		return ResponseEntity.noContent().build();
 	}
+
 }
+
