@@ -24,11 +24,19 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	private AuthenticationManager authenticationManager;
 	private JWTUtil jwtUtil;
 
+	//Construtor
 	public JWTAuthenticationFilter(AuthenticationManager authenticationManager, JWTUtil jwtUtil) {
 		super();
 		this.authenticationManager = authenticationManager;
 		this.jwtUtil = jwtUtil;
 	}
+	
+	/*
+	 * CRIA OS 3 METSOS DE ACESSO CASO
+	 * SUCESSO
+	 * NÃO SUCESSO
+	 * 
+	 * */
 
 	@Override
 	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
